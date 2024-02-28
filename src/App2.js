@@ -1,37 +1,61 @@
-import React, { useState } from "react";
+
+
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../src/App.css";
+import '../src/App.css'
 
 const App2 = () => {
-  const [comments, setComments] = useState([]);
+  const [user, setUser] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const fetchComments = async () => {
-    try {
-      const response = await axios.get(
-        `https://jsonplaceholder.typicode.com/comments`
-      );
-      setComments(response.data);
-    } catch (err) {
-      console.error("Error", err);
-    }
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`https://jsonplaceholder.typicode.com/users`);
+        setUser(response.data);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
   };
-  fetchComments();
+
+  const filteredUser = user.filter(user =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
+      <input
+        type="text"
+        placeholder="Search by name..."
+        value={searchTerm}
+        onChange={handleSearch}
+      />
       <table>
         <thead className="handle">
           <tr>
-            <th>id</th>
+          <th>id</th>
             <th>Name</th>
-            <th>email</th>
+            <th>username</th>
+            <th>Email</th>
+
           </tr>
         </thead>
         <tbody>
-          {comments.map((comment, index) => (
-            <tr className="handle2" key={index}>
-              <td>{comment.id}</td>
-              <td>{comment.name}</td>
-              <td>{comment.email}</td>
+          {filteredUser.map(({ id, name, email,username  }) => (
+            <tr className="handle2" key={id}>
+            <td>{id}</td>
+              <td>{name}</td>
+              <td>{username}</td>
+              <td>{email}</td>
+             
+             
             </tr>
           ))}
         </tbody>
@@ -41,3 +65,5 @@ const App2 = () => {
 };
 
 export default App2;
+
+
