@@ -57,3 +57,26 @@ mark {
   background-color: yellow;
   font-weight: bold;
 }
+
+
+.cen{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+.true-btn {
+  background-color: blue;
+  color: white;
+  padding: 10px;
+  margin: 5px;
+}
+
+.set-btn {
+  background-color: green;
+  color: white;
+  padding: 10px;
+  margin: 5px;
+}
